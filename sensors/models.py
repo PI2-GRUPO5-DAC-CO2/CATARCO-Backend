@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+class Sensor(models.Model):
+    sensor_id: models.IntegerField(unique=True)
+    station_id: models.IntegerField()
+    value: models.IntegerField()

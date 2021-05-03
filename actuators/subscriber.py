@@ -21,36 +21,41 @@ def connect_mqtt() -> mqtt_client:
     client.connect(broker, port)
     return client
 
+def get_id(key):
+    if key == 'sistema':
+        return 1
+    
+    return 2
+
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        data_str = msg.payload.decode().replace("\'", "\"")
+        raw_data = json.loads(msg.payload.decode())
+        data_str = raw_data[0].replace("\'", "\"")
         data = json.loads(data_str)
         key = list(data.keys())[0]
 
-        if 'sensors' in INSTALLED_APPS:
-            from .models import Sensor
+        if 'actuators' in INSTALLED_APPS:
+            from .models import Actuator
 
-            sensor = None
+            id = get_id(key)
+            actuator = None
             try:
-                sensor = Sensor.objects.get(id=data['sensor_id'])
-            except Sensor.DoesNotExist:
-                sensor = Sensor.objects.create(
-                    id=data['sensor_id'],
+                actuator = Actuator.objects.get(id=id, actuator_id=data['atuador_id'])
+            except Actuator.DoesNotExist:
+                actuator = Actuator.objects.create(
+                    id=id,
+                    actuator_id=data['atuador_id'],
                     station_id=data['estacao_id'],
                     value=data[key]
                 )
             else:
-                Sensor.objects.filter(id=data['sensor_id']).update(
+                Actuator.objects.filter(id=id, actuator_id=data['atuador_id']).update(
                     value=data[key]
                 )
 
-    client.subscribe(f'/CATARCO/sensor/velocidade')
-    client.subscribe(f'/CATARCO/sensor/umidade')
-    client.subscribe(f'/CATARCO/sensor/temperatura')
-    client.subscribe(f'/CATARCO/sensor/pressao')
-    client.subscribe(f'/CATARCO/sensor/nivel')
-    client.subscribe(f'/CATARCO/sensor/co2')
+    client.subscribe(f'/CATARCO/atuador/ventilador_r')
+    client.subscribe(f'/CATARCO/atuador/sistema_r')
     client.on_message = on_message
 
 

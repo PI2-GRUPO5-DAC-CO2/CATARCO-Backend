@@ -1,6 +1,6 @@
 from django.db import models
 
 class Sensor(models.Model):
-    sensor_id: models.IntegerField(unique=True)
-    station_id: models.IntegerField()
-    value: models.IntegerField()
+    id = models.IntegerField(primary_key=True)
+    station_id = models.IntegerField(blank=False)
+    value = models.IntegerField(blank=False)

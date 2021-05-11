@@ -26,7 +26,8 @@ def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         data_str = msg.payload.decode().replace("\'", "\"")
         data = json.loads(data_str)
-        key = list(data.keys())[0]
+        key = list(data.keys())[2]
+
 
         if 'sensors' in INSTALLED_APPS:
             from .models import Sensor
@@ -41,9 +42,12 @@ def subscribe(client: mqtt_client):
                     value=data[key]
                 )
             else:
-                Sensor.objects.filter(id=data['sensor_id']).update(
-                    value=data[key]
-                )
+                sensor = Sensor.objects.get(id=data['sensor_id'])
+                if data[key] != sensor.value :
+                    Sensor.objects.filter(id=data['sensor_id']).update(
+                        value=data[key]
+                    )
+
 
     client.subscribe(f'/CATARCO/sensor/velocidade')
     client.subscribe(f'/CATARCO/sensor/umidade')

@@ -4,6 +4,7 @@
 *.pyc
 __pycache__/
 db.sqlite3
+catarco_db
 media
 
 # Backup files # 

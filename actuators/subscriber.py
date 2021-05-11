@@ -6,8 +6,8 @@ import json
 import sys
 sys.path.append("..")
 
-broker = 'broker.emqx.io'
 port = 1883
+broker = 'broker.emqx.io'
 client_id = f'python-mqtt-{random.randint(0, 100)}'
 
 
@@ -21,10 +21,11 @@ def connect_mqtt() -> mqtt_client:
     client.connect(broker, port)
     return client
 
+
 def get_id(key):
     if key == 'sistema':
         return 1
-    
+
     return 2
 
 
@@ -33,7 +34,7 @@ def subscribe(client: mqtt_client):
         raw_data = json.loads(msg.payload.decode())
         data_str = raw_data[0].replace("\'", "\"")
         data = json.loads(data_str)
-        key = list(data.keys())[0]
+        key = list(data.keys())[2]
 
         if 'actuators' in INSTALLED_APPS:
             from .models import Actuator
@@ -41,7 +42,8 @@ def subscribe(client: mqtt_client):
             id = get_id(key)
             actuator = None
             try:
-                actuator = Actuator.objects.get(id=id, actuator_id=data['atuador_id'])
+                actuator = Actuator.objects.get(
+                    id=id, actuator_id=data['atuador_id'])
             except Actuator.DoesNotExist:
                 actuator = Actuator.objects.create(
                     id=id,

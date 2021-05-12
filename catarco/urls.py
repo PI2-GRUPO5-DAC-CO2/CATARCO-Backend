@@ -11,6 +11,6 @@ router.register(r'actuators', ActuatorViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('actuator/publish', actuator_publisher),
+    path('actuators/publish/', actuator_publisher),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

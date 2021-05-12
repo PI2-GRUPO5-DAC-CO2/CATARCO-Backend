@@ -11,7 +11,7 @@ class ActuatorViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows actuators to be viewed or edited.
     """
-    queryset = Actuator.objects.all()
+    queryset = Actuator.objects.all().order_by('actuator_id')
     serializer_class = ActuatorSerializer
     permission_classes = [permissions.AllowAny]
 

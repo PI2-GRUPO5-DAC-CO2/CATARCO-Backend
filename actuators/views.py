@@ -5,7 +5,6 @@ from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from .models import Actuator
 from . import publisher
-import json
 
 
 class ActuatorViewSet(viewsets.ModelViewSet):
@@ -17,29 +16,34 @@ class ActuatorViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-@api_view(['POST', 'PUT'])
+@api_view(['PUT'])
 def actuator_publisher(request):
     data = JSONParser().parse(request)
 
     try:
         actuator = Actuator.objects.get(
-            id=data['id'], actuator_id=data['actuator_id']
+            station_id=data['estacao_id'],
+            actuator_id=data['atuador_id']
         )
     except Actuator.DoesNotExist:
-        return JsonResponse({"error": "Atuador não encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse(
+            {"error": "Atuador não encontrado"},
+            status=status.HTTP_404_NOT_FOUND
+        )
 
     actuator = None
-    if data['id'] == 1 : actuator = "sistema"
-    else: actuator = "ventilador"
+    if data['atuador_id'] == 1 :
+        actuator = "sistema"
+    else:
+        actuator = "ventilador"
 
-    publisher.run(
-        [f"/CATARCO/atuador/{actuator}_w", {
-            f'{actuator}': data['value'],
-            'estacao_id': 1,
-            'atuador_id': data['actuator_id']
+    metrics = [f"/CATARCO/atuador/{actuator}_w",
+        {
+            'estacao_id': data['estacao_id'],
+            'atuador_id': data['atuador_id'],
+            f'{actuator}': data['valor']
         }
-    ])
-    Actuator.objects.filter(id=data['id'], actuator_id=data['actuator_id']).update(
-        value=data['value']
-    )
+    ]
+    publisher.run(metrics)
+    
     return JsonResponse({"message": "Atuador atualizado!"})

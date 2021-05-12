@@ -1,5 +1,5 @@
-from .models import Actuator
 from rest_framework import serializers
+from .models import Actuator
 
 
 class ActuatorSerializer(serializers.ModelSerializer):

@@ -68,12 +68,11 @@ WSGI_APPLICATION = 'catarco.wsgi.application'
 
 # Cors
 
-CORS_ORIGIN_ALLOW_ALL = True
-#CORS_ORIGIN_ALLOW_ALL = False
-#CORS_ORIGIN_WHITELIST = (
-#    'http://localhost:3000',
-#    'https://catarco.netlify.app',
-#)
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+   'http://localhost:3000',
+   'https://catarco.netlify.app',
+)
 
 
 # Database
@@ -82,11 +81,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),
+        'NAME': os.getenv('POSTGRES_DB', 'catarcodb'),
+        'USER': os.getenv('POSTGRES_USER', 'myuser'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
     }
 }
 

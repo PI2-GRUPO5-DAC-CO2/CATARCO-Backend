@@ -28,26 +28,29 @@ def subscribe(client: mqtt_client):
         data = json.loads(data_str)
         key = list(data.keys())[2]
 
-
         if 'sensors' in INSTALLED_APPS:
             from .models import Sensor
 
             sensor = None
             try:
-                sensor = Sensor.objects.get(id=data['sensor_id'])
+                sensor = Sensor.objects.get(
+                    station_id=data['estacao_id'],
+                    sensor_id=data['sensor_id']
+                )
             except Sensor.DoesNotExist:
                 sensor = Sensor.objects.create(
-                    id=data['sensor_id'],
                     station_id=data['estacao_id'],
+                    sensor_id=data['sensor_id'],
                     value=data[key]
                 )
             else:
-                sensor = Sensor.objects.get(id=data['sensor_id'])
-                if data[key] != sensor.value :
-                    Sensor.objects.filter(id=data['sensor_id']).update(
+                if data[key] != sensor.value:
+                    Sensor.objects.filter(
+                        station_id=data['estacao_id'],
+                        sensor_id=data['sensor_id']
+                    ).update(
                         value=data[key]
                     )
-
 
     client.subscribe(f'/CATARCO/sensor/velocidade')
     client.subscribe(f'/CATARCO/sensor/umidade')

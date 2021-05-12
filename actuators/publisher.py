@@ -1,6 +1,4 @@
 import random
-import time
-import sys
 from paho.mqtt import client as mqtt_client
 
 port = 1883
@@ -19,10 +17,6 @@ def connect_mqtt():
 
 
 def publish(client, metrics):
-    time.sleep(1)
-
-    random_flag = random.randint(0, 5)
-
     topic = metrics[0]
     payload_msg = metrics[1]
 
@@ -30,7 +24,7 @@ def publish(client, metrics):
     result = client.publish(topic, msg)
     status = result[0]
     if status == 0:
-        print(f"Atuador enviou: `{msg}` para o topico - `{topic}`")
+        print(f"Back enviou: {msg}")
     else:
         print(f"Failed to send message to topic {topic}")
 

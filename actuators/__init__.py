@@ -1,3 +1,6 @@
+from django.conf import settings
 from . import subscriber
 
-subscriber.run()
+if settings.RUNSERVER:
+    print("Initing actuators subscriber")
+    subscriber.run()

@@ -1,3 +1,6 @@
+from django.conf import settings
 from . import subscriber
 
-subscriber.run()
+if settings.RUNSERVER:
+    print("Initing sensors subscriber")
+    subscriber.run()

@@ -1,0 +1,20 @@
+version: "3.4"
+
+services:
+    db:
+        image: postgres
+        volumes:
+            - .:/var/lib/postgresql/data
+
+    api:
+        build: ./
+        volumes:
+            - .:/api
+        ports:
+            - 8000:8000
+        command: bash ./test.sh
+        depends_on:
+            - db
+
+volumes:
+    pgdata:

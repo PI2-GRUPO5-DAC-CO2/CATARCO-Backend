@@ -3,4 +3,5 @@
 sleep 8
 python3 manage.py migrate
 python3 manage.py migrate --run-syncdb
-python3 manage.py test
+coverage run manage.py test
+coveralls

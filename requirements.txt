@@ -3,3 +3,4 @@ djangorestframework==3.12.4
 psycopg2==2.8.6
 paho-mqtt
 django-cors-headers
+coveralls

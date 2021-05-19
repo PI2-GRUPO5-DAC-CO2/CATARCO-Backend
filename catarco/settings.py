@@ -12,7 +12,7 @@ RUNSERVER = len(sys.argv) > 1 and sys.argv[1] == 'runserver'
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8j+5r^m(q-$vw^#1xutx@w$zph-fe0y84v#=0u6u+v^otf(b57'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

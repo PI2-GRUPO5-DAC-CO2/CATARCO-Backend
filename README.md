@@ -1,6 +1,6 @@
 # CATARCO Backend
-[![Build Status](https://travis-ci.com/PI2-GRUPO5-DAC-CO2/CATARCO-Backend.svg?branch=main)](https://travis-ci.com/PI2-GRUPO5-DAC-CO2/CATARCO-Backend)
-[![Coverage Status](https://coveralls.io/repos/github/PI2-GRUPO5-DAC-CO2/CATARCO-Backend/badge.svg?branch=HEAD)](https://coveralls.io/github/PI2-GRUPO5-DAC-CO2/CATARCO-Backend?branch=HEAD)
+[![Build Status](https://travis-ci.com/PI2-GRUPO5-DAC-CO2/CATARCO-Backend.svg)](https://travis-ci.com/PI2-GRUPO5-DAC-CO2/CATARCO-Backend)
+[![Coverage Status](https://coveralls.io/repos/github/PI2-GRUPO5-DAC-CO2/CATARCO-Backend/badge.svg)](https://coveralls.io/github/PI2-GRUPO5-DAC-CO2/CATARCO-Backend?branch=HEAD)
 
 ## Instruções
 ###  Iniciar Container
